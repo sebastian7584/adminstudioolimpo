@@ -96,16 +96,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Earning',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=8)),
-                ('id_account', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='principal.account')),
-                ('id_period', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='principal.period')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Document',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

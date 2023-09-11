@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from . import viewsets
+from . import views
 from rest_framework import routers
 
 router = routers.SimpleRouter()
@@ -17,4 +18,11 @@ router.register('earning', viewsets.EarningViewSet)
 router.register('document', viewsets.DocumentViewSet)
 router.register('advance', viewsets.AdvanceViewSet)
 
-urlpatterns = router.urls
+
+urlpatterns = [
+    # Rutas para funciones de vista normales
+    path('cargarChaturbate/<str:dia>/<str:mes>/<str:año>/<str:save>', views.cargarChaturbate, name='cargarChaturbate'),
+    
+    # Incluye las rutas del router
+    path('', include(router.urls)),
+]

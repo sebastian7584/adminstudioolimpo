@@ -68,7 +68,7 @@ class Master(models.Model):
     id_owner = models.ForeignKey(Owner, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.username
+        return f'{self.id_page.name} - {self.username}'
 
 class Account(models.Model):
     id_master = models.ForeignKey(Master, null=True, on_delete=models.SET_NULL)
@@ -97,7 +97,7 @@ class Period(models.Model):
         return f'{self.year}-{self.mount}-{self.period}'
 
 class Earning(models.Model):
-    date = models.DateField()
+    date = models.IntegerField()
     id_account = models.ForeignKey(Account, null=True, on_delete=models.SET_NULL)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     id_period = models.ForeignKey(Period, null=True, on_delete=models.SET_NULL)
