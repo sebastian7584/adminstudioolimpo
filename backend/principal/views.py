@@ -27,7 +27,7 @@ class Chaturbate:
         self.dia = dia
         self.mes = mes
         self.año = año
-        self.URL = URL = 'https://es.chaturbate.com/affiliates/apistats/?username='+self.username+'&token='+self.token+'&stats_breakdown=sub_account__username&campaign=&search_criteria=2&period=0&date_day='+self.dia+'&date_month='+self.mes+'&date_year='+self.año+'&start_date_day=1&start_date_month=7&start_date_year=2021&end_date_day=15&end_date_month=7&end_date_year=2021' #configuramos la url
+        self.URL = f'https://chaturbate.com/affiliates/apistats/?username={self.username}&token={self.token}&stats_breakdown=sub_account__username&campaign=&search_criteria=2&period=0&language=es&date={self.año}-{self.mes}-{self.dia}'
         self.cargarDatos()
 
     def cargarDatos(self):
