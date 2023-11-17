@@ -23,7 +23,7 @@ urlpatterns = [
     # Rutas para funciones de vista normales
     path('cargarChaturbate/<str:dia>/<str:mes>/<str:año>/<str:save>', views.cargarChaturbate, name='cargarChaturbate'),
     path('cargarStripchat/<str:dia>/<str:mes>/<str:año>/<str:save>', views.cargarStripchat, name='cargarStripchat'),
-    
+    path('cargarGanancia/', views.cargarDataUnidad, name='cargarData'),
     # Incluye las rutas del router
     path('', include(router.urls)),
 ]

@@ -1,3 +1,6 @@
+from selenium import webdriver
+from msedge.selenium_tools import Edge, EdgeOptions
+
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -9,6 +12,19 @@ import requests  #Importamos la librería requests
 from datetime import date, datetime, timedelta
 
 # Create your views here.
+
+@api_view(["POST"])
+def cargarDataUnidad(request):
+    master = request.data['master']
+    cuenta = request.data['cuenta']
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    valor = request.data['valor']
+    GuardarEstadistica(master, cuenta, dia, mes, año, valor).save()
+        
+    return Response({'detail': "no"})
+
 
 @api_view(["GET"])
 def cargarChaturbate(request, dia, mes, año, save):
@@ -50,6 +66,7 @@ class Chaturbate:
         print(data, 'estos son')
         if data['stats'] == []: 
             stats={}
+            print('sin datos')
         else:
             data = data['stats'][1] if len(data['stats'])>1 else  data['stats'][0]   
             for i in range (0,len(data['rows'])):
@@ -141,6 +158,7 @@ class GuardarEstadistica:
             periodo = 1 if self.dia < 16 else 2
             period = Period.objects.filter(year=self.año, mount=self.mes, period = periodo).first()
             if period is not None:
+                print("entra a save")
                 earning = Earning.objects.filter(date=self.dia, id_account=account, id_period=period).first()
                 if earning is not None:
                     earning.amount = self.valor
@@ -163,3 +181,5 @@ class GuardarEstadistica:
                         code_other= account.code_other,
                     )
                     nuevaEarning.save()
+        return Response({'detail': "exitoso"})
+
