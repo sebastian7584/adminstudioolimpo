@@ -523,7 +523,7 @@ class CargarPaginas:
             direct.append(fichero.name)
 
 
-        filename = ejemplo_dir + "\\"+direct[0]
+        filename = ejemplo_dir + "/"+direct[0]
 
         data = pandas.read_csv(filename)
         data1 = np.asarray(data)
@@ -600,10 +600,10 @@ class CargarPaginas:
         monto=[]
         junta=[]
 
-        alica=ejemplo_dir + '\\'+ direct[0]
+        alica=ejemplo_dir + '/'+ direct[0]
         print(alica)
 
-        filename = ejemplo_dir + "\\"+direct[0]
+        filename = ejemplo_dir + "/"+direct[0]
 
         data = pandas.read_csv(filename, encoding='latin-1')
         data1 = np.asarray(data)
