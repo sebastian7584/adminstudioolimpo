@@ -478,8 +478,6 @@ class CargarPaginas:
         año = self.año
         db = self.db
         load_dotenv()
-        ruta = os.getenv("DESCARGAS")
-        print(ruta)
         options = Options()
         options.add_argument("--headless=new")
         options.add_argument('--no-sandbox')
