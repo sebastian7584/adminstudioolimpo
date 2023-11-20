@@ -558,7 +558,7 @@ class CargarPaginas:
             "safebrowsing_for_trusted_sources_enabled": False,
             "safebrowsing.enabled": False
         })
-        browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        browser = webdriver.Chrome(options=options)
 
         browser.get('https://www.streamatemodels.com/smm/login.php')
         time.sleep(7)
