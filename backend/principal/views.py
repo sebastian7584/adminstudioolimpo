@@ -58,8 +58,8 @@ def cargarDataUnidad(request):
 def cargarPaginas(request, dia, mes, año):
     cargar = CargarPaginas(dia, mes, año)
     cargar.chaturbate()
-    # cargar.stripchat()
-    # cargar.bonga()
+    cargar.stripchat()
+    cargar.bonga()
     # cargar.flirt4Free()
     # cargar.streamate()
     resultado = cargar.resultado
