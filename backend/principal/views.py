@@ -57,10 +57,10 @@ def cargarDataUnidad(request):
 @api_view(["GET"])
 def cargarPaginas(request, dia, mes, año):
     cargar = CargarPaginas(dia, mes, año)
-    cargar.chaturbate()
-    cargar.stripchat()
-    cargar.bonga()
-    cargar.flirt4Free()
+    # cargar.chaturbate()
+    # cargar.stripchat()
+    # cargar.bonga()
+    # cargar.flirt4Free()
     cargar.streamate()
     resultado = cargar.resultado
     return Response(resultado)
