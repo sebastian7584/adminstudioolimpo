@@ -10,8 +10,26 @@ from .models import Account, Master, Earning, Period
 from .serializers import CountrySerializer
 import requests  #Importamos la librería requests
 from datetime import date, datetime, timedelta
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Create your views here.
+
+@api_view(["GET"])
+def selenium(request):
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+    driver.get("https://python.org")
+    mensaje = driver.title
+    driver.close()
+    return Response({'detail': mensaje})
+
 
 @api_view(["POST"])
 def cargarDataUnidad(request):
