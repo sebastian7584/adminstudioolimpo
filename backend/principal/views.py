@@ -484,7 +484,7 @@ class CargarPaginas:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archvios",
+            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing_for_trusted_sources_enabled": False,
@@ -516,7 +516,7 @@ class CargarPaginas:
         if int(dia) <16:
             quincena=1   
 
-        ejemplo_dir= "/var/adminstudioolimpo/backend/archvios"
+        ejemplo_dir= "/var/adminstudioolimpo/backend/archivos"
         direct=[]
         directorio = pathlib.Path(ejemplo_dir)
         for fichero in directorio.iterdir():
@@ -552,7 +552,7 @@ class CargarPaginas:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archvios",
+            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing_for_trusted_sources_enabled": False,
@@ -590,7 +590,7 @@ class CargarPaginas:
         if int(dia) <16:
             quincena=1  
         time.sleep(2)
-        ejemplo_dir= "/var/adminstudioolimpo/backend/archvios"
+        ejemplo_dir= "/var/adminstudioolimpo/backend/archivos"
         direct=[]
         directorio = pathlib.Path(ejemplo_dir)
         for fichero in directorio.iterdir():
