@@ -21,8 +21,7 @@ router.register('advance', viewsets.AdvanceViewSet)
 
 urlpatterns = [
     # Rutas para funciones de vista normales
-    path('cargarChaturbate/<str:dia>/<str:mes>/<str:año>/<str:save>', views.cargarChaturbate, name='cargarChaturbate'),
-    path('cargarStripchat/<str:dia>/<str:mes>/<str:año>/<str:save>', views.cargarStripchat, name='cargarStripchat'),
+    path('cargarPaginas/<str:dia>/<str:mes>/<str:año>', views.cargarPaginas, name='cargarPaginas'),
     path('cargarGanancia/', views.cargarDataUnidad, name='cargarData'),
     path('selenium/', views.selenium, name='selenium'),
     # Incluye las rutas del router
