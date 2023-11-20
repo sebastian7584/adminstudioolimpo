@@ -57,10 +57,11 @@ def cargarDataUnidad(request):
 @api_view(["GET"])
 def cargarPaginas(request, dia, mes, año):
     cargar = CargarPaginas(dia, mes, año)
-    # cargar.chaturbate()
-    # cargar.stripchat()
-    # cargar.bonga()
+    cargar.chaturbate()
+    cargar.stripchat()
+    cargar.bonga()
     cargar.flirt4Free()
+    cargar.streamate()
     resultado = cargar.resultado
     return Response(resultado)
 
@@ -483,7 +484,7 @@ class CargarPaginas:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend",
+            "download.default_directory": "/var/adminstudioolimpo/backend/archvios",
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing_for_trusted_sources_enabled": False,
@@ -510,24 +511,113 @@ class CargarPaginas:
         time.sleep(3)
         browser.close()
 
-        # if int(dia) >15:
-        #     quincena=2
-        # if int(dia) <16:
-        #     quincena=1   
+        if int(dia) >15:
+            quincena=2
+        if int(dia) <16:
+            quincena=1   
 
-        # ejemplo_dir= f"{ruta}"
-        # direct=[]
-        # directorio = pathlib.Path(ejemplo_dir)
-        # for fichero in directorio.iterdir():
-        #     direct.append(fichero.name)
+        ejemplo_dir= "/var/adminstudioolimpo/backend/archvios"
+        direct=[]
+        directorio = pathlib.Path(ejemplo_dir)
+        for fichero in directorio.iterdir():
+            direct.append(fichero.name)
 
 
-        # filename = ejemplo_dir + "\\"+direct[0]
+        filename = ejemplo_dir + "\\"+direct[0]
 
-        # data = pandas.read_csv(filename)
-        # data1 = np.asarray(data)
-        # cantidad = data1.shape[0]
-        # remove(filename)
+        data = pandas.read_csv(filename)
+        data1 = np.asarray(data)
+        cantidad = data1.shape[0]
+        remove(filename)
 
-        # for i in range (0, cantidad ) :
-        #     db.child('flirt4free').child(str(data1[i][0])).child(año+mes+str(quincena)).child(dia).set(data1[i][21]*1.86/60)
+        for i in range (0, cantidad ) :
+            db.child('flirt4free').child(str(data1[i][0])).child(año+mes+str(quincena)).child(dia).set(data1[i][21]*1.86/60)
+    
+    def streamate(self):
+        try:
+            self.cargarStreamate1()
+            self.resultado['streamate1'] = 'exitosa'
+        except Exception as e:
+            print(e)
+            self.resultado['streamate1'] = 'fallo'
+
+    def cargarStreamate1(self):
+        dia = self.dia
+        mes = self.mes
+        año = self.año
+        db = self.db
+        load_dotenv()
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_experimental_option("prefs", {
+            "download.default_directory": "/var/adminstudioolimpo/backend/archvios",
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing_for_trusted_sources_enabled": False,
+            "safebrowsing.enabled": False
+        })
+        browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+        browser.get('https://www.streamatemodels.com/smm/login.php')
+        time.sleep(7)
+        user = browser.find_element('xpath', '/html/body/div/div/div/main/div/div/div/div/form/fieldset/span[1]/div/input')
+        if user is not None:
+            user.send_keys("olimpowebstudio@gmail.com")
+        password = browser.find_element('id', 'password')
+        if password is not None:
+            password.send_keys("Zeus2020**")
+        browser.execute_script("window.scrollTo(0, 300)")
+        time.sleep(2)
+        
+        sumbit = browser.find_element('xpath', '/html/body/div/div/div/main/div/div/div/div/form/fieldset/button')
+        if sumbit is not None:
+            sumbit.click()
+
+
+        print('Estadisticas Streamate')
+        mesfecha=['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'] 
+
+        time.sleep(3)
+        estadistica= 'https://www.streamatemodels.com/smm/reports/earnings/EarningsReportPivot.php?range=day&earnday='+mesfecha[int(mes)-1]+'%20'+dia+',%20'+año+'&earnyear=2021&earnweek=1626480000&studio_filter=0&format=csv_summary'
+        browser.get(estadistica)
+        time.sleep(2)
+        browser.quit()
+
+        if int(dia) >15:
+            quincena=2
+        if int(dia) <16:
+            quincena=1  
+        time.sleep(2)
+        ejemplo_dir= "/var/adminstudioolimpo/backend/archvios"
+        direct=[]
+        directorio = pathlib.Path(ejemplo_dir)
+        for fichero in directorio.iterdir():
+            direct.append(fichero.name)
+
+        nombre=[]
+        monto=[]
+        junta=[]
+
+        alica=ejemplo_dir + '\\'+ direct[0]
+        print(alica)
+
+        filename = ejemplo_dir + "\\"+direct[0]
+
+        data = pandas.read_csv(filename, encoding='latin-1')
+        data1 = np.asarray(data)
+        cantidad = data1.shape[0]
+
+        for i in range (0,cantidad):
+            if data1[i][0]>0:
+                nombre.append(data1[i][1])
+                monto.append(data1[i][7][1:len(data1[i][7])])
+
+
+
+
+        for i in range (0,len(nombre)):
+            db.child('streamate').child(nombre[i]).child(año+mes+str(quincena)).child(dia).set(monto[i])
+
+        remove(alica)
