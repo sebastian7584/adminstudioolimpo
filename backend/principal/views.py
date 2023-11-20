@@ -60,7 +60,7 @@ def cargarPaginas(request, dia, mes, año):
     cargar.chaturbate()
     cargar.stripchat()
     cargar.bonga()
-    # cargar.flirt4Free()
+    cargar.flirt4Free()
     # cargar.streamate()
     resultado = cargar.resultado
     return Response(resultado)
