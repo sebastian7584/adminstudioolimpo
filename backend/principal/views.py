@@ -260,7 +260,7 @@ class CargarPaginas:
             'isVisitorsAgreementAccepted': '1',
             '_ga': 'GA1.2.1301892351.1681656050',
             '_gid': 'GA1.2.573934947.1682341133',
-            'stripchat_com_sessionId': 'aa56cf8d050be5c3da037a2d6744a86c8eb9afa0ab118e1f1bc3b616a376',
+            'stripchat_com_sessionId': '804c4989241fdde38799d2a74543aba19b554b57219b1db01fffeceb1e7a',
             'stripchat_com_sessionRemember': '1',
             '_gat': '1',
         }
