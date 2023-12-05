@@ -833,13 +833,18 @@ class CargarPaginas:
         sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
         if sumbit is not None:
             sumbit.click()
+        # time.sleep(4)
+        # browser.get(estadistica)
         time.sleep(4)
-        browser.get(estadistica)
+        sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[1]/ul[1]/li[3]/a/div[2]')
+        # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
+        if sumbit is not None:
+            sumbit.click()
         time.sleep(4)
-        submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
-
-        # if sumbit is not None:
-        #     sumbit.click()
+        sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div')
+        # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
+        if sumbit is not None:
+            sumbit.click()
         # time.sleep(4)
         # sopa = browser.page_source
 
