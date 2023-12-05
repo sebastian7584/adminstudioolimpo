@@ -791,7 +791,7 @@ class CargarPaginas:
             self.resultado['imlive1'] = 'exitosa'
         except Exception as e:
             print(e)
-            self.resultado['imlive1'] = 'fallo'
+            self.resultado['imlive1'] = f'{e}'
     
     def cargarImlive1(self):
         dia = self.dia
