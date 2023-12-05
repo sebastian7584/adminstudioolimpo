@@ -834,13 +834,13 @@ class CargarPaginas:
             sumbit.click()
         # time.sleep(4)
         browser.get(estadistica)
-        time.sleep(4)
+        time.sleep(10)
         sopa = browser.page_source
 
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
-            raise Exception('no cargo datos la tabla')
+            raise Exception(f'{sopa}')
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
