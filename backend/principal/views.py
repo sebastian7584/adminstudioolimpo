@@ -74,7 +74,7 @@ def cargarPaginas(request, dia, mes, año):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def chaturbate(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -84,7 +84,7 @@ def chaturbate(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def stripchat(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -94,7 +94,7 @@ def stripchat(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def bonga(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -104,7 +104,7 @@ def bonga(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def flirt4free(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -114,7 +114,7 @@ def flirt4free(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def streamate(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -124,7 +124,7 @@ def streamate(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def jasmin(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -134,7 +134,7 @@ def jasmin(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view
+@api_view(['POST'])
 def imlive(request):
     dia = request.data['dia']
     mes = request.data['mes']
