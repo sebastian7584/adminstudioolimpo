@@ -770,8 +770,10 @@ class CargarPaginas:
         time.sleep(5)
         wait = WebDriverWait(browser, 10)
         # sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
-        cookie_accept_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='cookie-consent-banner-accept']")))
-        cookie_accept_button.click()
+        try:
+            cookie_accept_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='cookie-consent-banner-accept']")))
+            cookie_accept_button.click()
+        except: pass
         sumbit = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div > button[type='submit']")))
         if sumbit is not None:
             sumbit.click()
@@ -834,13 +836,14 @@ class CargarPaginas:
         if password is not None:
             password.send_keys("Zeus2020**")
         time.sleep(2)
+        wait = WebDriverWait(browser, 10)
         sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
         if sumbit is not None:
             sumbit.click()
         time.sleep(4)
         browser.get(estadistica)
         time.sleep(4)
-        sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]')
+        submit = wait.until(EC.element_to_be_clickable(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
         if sumbit is not None:
             sumbit.click()
         time.sleep(4)
