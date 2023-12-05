@@ -770,6 +770,8 @@ class CargarPaginas:
         time.sleep(5)
         wait = WebDriverWait(browser, 10)
         # sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
+        cookie_accept_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='cookie-consent-banner-accept']")))
+        cookie_accept_button.click()
         sumbit = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div > button[type='submit']")))
         if sumbit is not None:
             sumbit.click()
