@@ -842,20 +842,20 @@ class CargarPaginas:
             sumbit.click()
         time.sleep(4)
         browser.get(estadistica)
-        time.sleep(4)
-        submit = wait.until(EC.element_to_be_clickable(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
-        if sumbit is not None:
-            sumbit.click()
-        time.sleep(4)
-        sopa = browser.page_source
+        # time.sleep(4)
+        # submit = wait.until(EC.element_to_be_clickable(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
+        # if sumbit is not None:
+        #     sumbit.click()
+        # time.sleep(4)
+        # sopa = browser.page_source
 
-        self.scraping(sopa)
-        data = self.datos_tabla
-        for i in data:
-            modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
-            cantidad = i[9].replace('$','')
-            if float(cantidad) > 0:
-                diaQuincena = 15 if quincena == 1 else 30
-                db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
+        # self.scraping(sopa)
+        # data = self.datos_tabla
+        # for i in data:
+        #     modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
+        #     cantidad = i[9].replace('$','')
+        #     if float(cantidad) > 0:
+        #         diaQuincena = 15 if quincena == 1 else 30
+        #         db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
         
         browser.quit()
