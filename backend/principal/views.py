@@ -208,6 +208,10 @@ class CargarPaginas:
         self.dia2 = str(nueva_fecha.day)
         self.mes2 = str(nueva_fecha.month)
         self.año2 = str(nueva_fecha.year)
+        if int(self.dia2) < 10 :
+            self.dia2 ='0'+str(self.dia2)
+        if int(self.mes2) < 10 :
+            self.mes2 ='0'+str(self.mes2)
         firebaseConfig= {
             'apiKey': "AIzaSyDIVfFFVPeS-IItgh2ExPr2JPLCjh7gufI",
             'authDomain': "groovy-bonus-310519.firebaseapp.com",
@@ -800,7 +804,7 @@ class CargarPaginas:
         if int(dia) <16:
             quincena=1  
         options = Options()
-        # options.add_argument("--headless=new")
+        options.add_argument("--headless=new")
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
