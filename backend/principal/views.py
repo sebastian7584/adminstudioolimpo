@@ -1,6 +1,6 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
-from django.http import JsonResponse
+
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -138,7 +138,7 @@ def jasmin(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-# @api_view(['POST'])
+@api_view(['POST'])
 def imlive(request):
     dia = request.data['dia']
     mes = request.data['mes']
@@ -146,8 +146,6 @@ def imlive(request):
     cargar = CargarPaginas(dia, mes, año)
     cargar.imlive()
     resultado = cargar.resultado
-    base64_image = cargar.img
-    return JsonResponse({"base64Image": base64_image})
     return Response(resultado)
 
 
@@ -847,10 +845,7 @@ class CargarPaginas:
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
-            screenshot_bytes = browser.get_screenshot_as_png()
-            screenshot_buffer = io.BytesIO(screenshot_bytes)
-            base64_image = base64.b64encode(screenshot_bytes).decode("utf-8")
-            self.img = base64_image
+            raise Exception(f'{sopa}')
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
