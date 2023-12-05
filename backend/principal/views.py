@@ -146,6 +146,8 @@ def imlive(request):
     cargar = CargarPaginas(dia, mes, año)
     cargar.imlive()
     resultado = cargar.resultado
+    base64_image = cargar.img
+    return JsonResponse({"base64Image": base64_image})
     return Response(resultado)
 
 
@@ -848,7 +850,7 @@ class CargarPaginas:
             screenshot_bytes = browser.get_screenshot_as_png()
             screenshot_buffer = io.BytesIO(screenshot_bytes)
             base64_image = base64.b64encode(screenshot_bytes).decode("utf-8")
-            return JsonResponse({"base64Image": base64_image})
+            self.img = base64_image
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
