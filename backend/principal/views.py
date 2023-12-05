@@ -733,8 +733,7 @@ class CargarPaginas:
             self.cargarJasmin1()
             self.resultado['jasmin1'] = 'exitosa'
         except Exception as e:
-            print(e)
-            self.resultado['jasmin1'] = 'fallo'
+            self.resultado['jasmin1'] = f'{e}'
 
     def cargarJasmin1(self):
         dia = self.dia
