@@ -837,6 +837,7 @@ class CargarPaginas:
         time.sleep(10)
         sopa = browser.page_source
 
+        print(sopa)
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
