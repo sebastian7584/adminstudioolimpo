@@ -232,10 +232,9 @@ class CargarPaginas:
     def scraping(self, html):
         self.soup = BeautifulSoup(html, 'html.parser')
         tabla = self.soup.find('tbody')
-
+        datos_tabla = []
         if tabla:
             filas = tabla.find_all('tr')
-            datos_tabla = []
             for fila in filas:
                 celdas = fila.find_all('td')
                 datos_fila=[]
@@ -835,16 +834,13 @@ class CargarPaginas:
             sumbit.click()
         # time.sleep(4)
         browser.get(estadistica)
-        # time.sleep(4)
-        # sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div')
-        # # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
-        # if sumbit is not None:
-        #     sumbit.click()
         time.sleep(4)
         sopa = browser.page_source
 
         self.scraping(sopa)
         data = self.datos_tabla
+        if data == []:
+            raise('no cargo datos la tabla')
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
