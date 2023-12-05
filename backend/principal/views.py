@@ -836,7 +836,7 @@ class CargarPaginas:
         # time.sleep(4)
         # browser.get(estadistica)
         time.sleep(4)
-        sumbit = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div[1]/ul[1]/li[3]/a/div[2]")))
+        sumbit = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div[1]/ul[1]/li[3]/a")))
         # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
         if sumbit is not None:
             sumbit.click()
