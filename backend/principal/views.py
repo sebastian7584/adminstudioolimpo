@@ -815,9 +815,9 @@ class CargarPaginas:
         options.add_argument("--headless=new")
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        # browser = webdriver.Chrome(options=options)
-        # pagina = 'https://studio.imlive.com/#/'
-        # estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
+        browser = webdriver.Chrome(options=options)
+        pagina = 'https://studio.imlive.com/#/'
+        estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
         # browser.get(pagina)
         # log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
         # if log is not None:
@@ -851,4 +851,4 @@ class CargarPaginas:
         #         diaQuincena = 15 if quincena == 1 else 30
         #         db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
         
-        # browser.quit()
+        browser.quit()
