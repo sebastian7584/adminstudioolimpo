@@ -818,17 +818,17 @@ class CargarPaginas:
         browser = webdriver.Chrome(options=options)
         pagina = 'https://studio.imlive.com/#/'
         estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
-        # browser.get(pagina)
-        # log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
-        # if log is not None:
-        #     log.click()
-        # user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
-        # if user is not None:
-        #     user.send_keys("olimpostudioll")
-        # password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
-        # if password is not None:
-        #     password.send_keys("Zeus2020**")
-        # time.sleep(2)
+        browser.get(pagina)
+        log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
+        if log is not None:
+            log.click()
+        user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
+        if user is not None:
+            user.send_keys("olimpostudioll")
+        password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
+        if password is not None:
+            password.send_keys("Zeus2020**")
+        time.sleep(2)
         # wait = WebDriverWait(browser, 10)
         # sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
         # if sumbit is not None:
