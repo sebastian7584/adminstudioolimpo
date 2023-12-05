@@ -817,7 +817,7 @@ class CargarPaginas:
         options.add_argument('--disable-dev-shm-usage')
         browser = webdriver.Chrome(options=options)
         pagina = 'https://studio.imlive.com/#/'
-        estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
+        estadistica= 'https://studio.imlive.com/#/Studio/Statistics/HostReport'
         browser.get(pagina)
         log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
         if log is not None:
@@ -834,27 +834,22 @@ class CargarPaginas:
         if sumbit is not None:
             sumbit.click()
         # time.sleep(4)
-        # browser.get(estadistica)
-        time.sleep(4)
-        sumbit = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div[1]/ul[1]/li[3]/a")))
-        # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
-        if sumbit is not None:
-            sumbit.click()
-        time.sleep(4)
-        sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div')
-        # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
-        if sumbit is not None:
-            sumbit.click()
+        browser.get(estadistica)
         # time.sleep(4)
-        # sopa = browser.page_source
+        # sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div')
+        # # submit = wait.until(EC.visibility_of_element_located(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
+        # if sumbit is not None:
+        #     sumbit.click()
+        time.sleep(4)
+        sopa = browser.page_source
 
-        # self.scraping(sopa)
-        # data = self.datos_tabla
-        # for i in data:
-        #     modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
-        #     cantidad = i[9].replace('$','')
-        #     if float(cantidad) > 0:
-        #         diaQuincena = 15 if quincena == 1 else 30
-        #         db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
+        self.scraping(sopa)
+        data = self.datos_tabla
+        for i in data:
+            modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
+            cantidad = i[9].replace('$','')
+            if float(cantidad) > 0:
+                diaQuincena = 15 if quincena == 1 else 30
+                db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
         
         browser.quit()
