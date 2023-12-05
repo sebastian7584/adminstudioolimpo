@@ -815,33 +815,26 @@ class CargarPaginas:
         options.add_argument("--headless=new")
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing_for_trusted_sources_enabled": False,
-            "safebrowsing.enabled": False
-        })
-        browser = webdriver.Chrome(options=options)
-        pagina = 'https://studio.imlive.com/#/'
-        estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
-        browser.get(pagina)
-        log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
-        if log is not None:
-            log.click()
-        user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
-        if user is not None:
-            user.send_keys("olimpostudioll")
-        password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
-        if password is not None:
-            password.send_keys("Zeus2020**")
-        time.sleep(2)
-        wait = WebDriverWait(browser, 10)
-        sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
-        if sumbit is not None:
-            sumbit.click()
-        time.sleep(4)
-        browser.get(estadistica)
+        # browser = webdriver.Chrome(options=options)
+        # pagina = 'https://studio.imlive.com/#/'
+        # estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
+        # browser.get(pagina)
+        # log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
+        # if log is not None:
+        #     log.click()
+        # user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
+        # if user is not None:
+        #     user.send_keys("olimpostudioll")
+        # password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
+        # if password is not None:
+        #     password.send_keys("Zeus2020**")
+        # time.sleep(2)
+        # wait = WebDriverWait(browser, 10)
+        # sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
+        # if sumbit is not None:
+        #     sumbit.click()
+        # time.sleep(4)
+        # browser.get(estadistica)
         # time.sleep(4)
         # submit = wait.until(EC.element_to_be_clickable(('xpath', "/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]")))
         # if sumbit is not None:
@@ -858,4 +851,4 @@ class CargarPaginas:
         #         diaQuincena = 15 if quincena == 1 else 30
         #         db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
         
-        browser.quit()
+        # browser.quit()
