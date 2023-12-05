@@ -14,6 +14,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import pyrebase
 from datetime import datetime, timedelta
@@ -766,14 +768,12 @@ class CargarPaginas:
         if password is not None:
             password.send_keys("Zeus2020**")
         time.sleep(5)
-        try:
-            sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
-            if sumbit is not None:
-                sumbit.click()
-        except:
-            sumbit = browser.find_element('xpath', "/html/body/div[5]/div[2]/ph-row/ph-col/div/div/form/div/div[3]/button")
-            if sumbit is not None:
-                sumbit.click()
+        wait = WebDriverWait(browser, 10)
+        # sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
+        sumbit = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div > button[type='submit']")))
+        if sumbit is not None:
+            sumbit.click()
+       
         time.sleep(4)
         browser.get(estadistica)
         sopa = browser.page_source
