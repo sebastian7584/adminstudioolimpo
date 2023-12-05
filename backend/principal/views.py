@@ -829,7 +829,7 @@ class CargarPaginas:
         if password is not None:
             password.send_keys("Zeus2020**")
         time.sleep(2)
-        # wait = WebDriverWait(browser, 10)
+        wait = WebDriverWait(browser, 10)
         # sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
         # if sumbit is not None:
         #     sumbit.click()
