@@ -1,7 +1,7 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
@@ -13,6 +13,7 @@ from datetime import date, datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import pyrebase
 from datetime import datetime, timedelta
@@ -24,6 +25,7 @@ from os import remove
 import os
 import numpy as np
 from dotenv import load_dotenv
+from bs4 import BeautifulSoup
 
 # Create your views here.
 
@@ -39,6 +41,13 @@ def selenium(request):
     mensaje = driver.title
     driver.close()
     return Response({'detail': mensaje})
+
+@api_view(["GET"])
+def asignarPagina(request):
+    numero = Account.objects.filter(code_user=None).first()
+    print(numero.code_user)
+    numero = numero.id
+    return redirect(f'/api/v1.0/account/{numero}/')
 
 
 @api_view(["POST"])
@@ -64,6 +73,77 @@ def cargarPaginas(request, dia, mes, año):
     cargar.streamate()
     resultado = cargar.resultado
     return Response(resultado)
+
+@api_view
+def chaturbate(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.chaturbate()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def stripchat(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.stripchat()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def bonga(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.bonga()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def flirt4free(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.flirt4Free()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def streamate(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.streamate()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def jasmin(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.jasmin()
+    resultado = cargar.resultado
+    return Response(resultado)
+
+@api_view
+def imlive(request):
+    dia = request.data['dia']
+    mes = request.data['mes']
+    año = request.data['año']
+    cargar = CargarPaginas(dia, mes, año)
+    cargar.imlive()
+    resultado = cargar.resultado
+    return Response(resultado)
+
 
 
 
@@ -142,6 +222,21 @@ class CargarPaginas:
         firebase=pyrebase.initialize_app(firebaseConfig)
 
         self.db=firebase.database()
+    
+    def scraping(self, html):
+        self.soup = BeautifulSoup(html, 'html.parser')
+        tabla = self.soup.find('tbody')
+
+        if tabla:
+            filas = tabla.find_all('tr')
+            datos_tabla = []
+            for fila in filas:
+                celdas = fila.find_all('td')
+                datos_fila=[]
+                for celda in celdas:
+                    datos_fila.append(celda.get_text())
+                datos_tabla.append(datos_fila)
+        self.datos_tabla = datos_tabla
 
     
     def chaturbate(self):
@@ -185,6 +280,7 @@ class CargarPaginas:
                 
                 for i in range (0,len(data['rows'])):
                     db.child('chaturbate').child(data['rows'][i][0]).child(año+mes+str(quincena)).child(dia).set(data['rows'][i][2])
+                    GuardarEstadistica('olimpostudio', data['rows'][i][0], dia, mes, año, data['rows'][i][2]).save()
 
         else: print('Solo se puede hasta dia anterior al actual')
     
@@ -217,6 +313,7 @@ class CargarPaginas:
                 print(data)
                 for i in range (0,len(data['rows'])):
                     db.child('chaturbate').child(data['rows'][i][0]).child(año+mes+str(quincena)).child(dia).set(data['rows'][i][2])
+                    GuardarEstadistica('olimpostudioll', data['rows'][i][0], dia, mes, año, data['rows'][i][2]).save()
 
         else: print('Solo se puede hasta dia anterior al actual')
 
@@ -286,6 +383,7 @@ class CargarPaginas:
         
         for i in range (0, len(eq['earnings'])):
             db.child('stripchat').child(eq['earnings'][i]['username']).child(año+mes+str(quincena)).child(dia).set(eq['earnings'][i]['total']/20)
+            GuardarEstadistica('olimpostudio-strip', eq['earnings'][i]['username'], dia, mes, año, eq['earnings'][i]['total']/20).save()
         
     def cargarStripchat2(self):
         dia = self.dia
@@ -354,6 +452,7 @@ class CargarPaginas:
 
         for i in range (0, len(eq['earnings'])):
             db.child('stripchat').child(eq['earnings'][i]['username']).child(año+mes+str(quincena)).child(dia).set(eq['earnings'][i]['total']/20)
+            GuardarEstadistica('olimpostudioll-strip', eq['earnings'][i]['username'], dia, mes, año, eq['earnings'][i]['total']/20).save()
         
     def cargarStripchat3(self):
         dia = self.dia
@@ -408,6 +507,7 @@ class CargarPaginas:
 
         for i in range (0, len(eq['earnings'])):
             db.child('stripchat').child(eq['earnings'][i]['username']).child(año+mes+str(quincena)).child(dia).set(eq['earnings'][i]['total']/20)
+            GuardarEstadistica('juantokens-strip', eq['earnings'][i]['username'], dia, mes, año, eq['earnings'][i]['total']/20).save()
     
     def bonga(self):
         try:
@@ -417,7 +517,6 @@ class CargarPaginas:
             print(e)
             self.resultado['bonga1'] = 'fallo'
         
-
     def cargarBonga1(self):
         modelos=[
             'rachellsex',
@@ -464,6 +563,7 @@ class CargarPaginas:
                 valor =float(f"{valor:.2f}")
                 if valor > 0:
                     db.child('bonga').child(model).child(año+mes+str(quincena)).child(dia).set(valor)
+                    GuardarEstadistica('olimpostudio1-bonga', model, dia, mes, año, valor).save()
     
     def flirt4Free(self):
         try:
@@ -532,6 +632,7 @@ class CargarPaginas:
 
         for i in range (0, cantidad ) :
             db.child('flirt4free').child(str(data1[i][0])).child(año+mes+str(quincena)).child(dia).set(data1[i][21]*1.86/60)
+            GuardarEstadistica('olimpostudio-flirt', str(data1[i][0]), dia, mes, año, data1[i][21]*1.86/60).save()
     
     def streamate(self):
         try:
@@ -619,5 +720,129 @@ class CargarPaginas:
 
         for i in range (0,len(nombre)):
             db.child('streamate').child(nombre[i]).child(año+mes+str(quincena)).child(dia).set(monto[i])
+            GuardarEstadistica('olimpo-stream', nombre[i], dia, mes, año, monto[i]).save()
 
         remove(alica)
+
+    def jasmin(self):
+        try:
+            self.cargarJasmin1()
+            self.resultado['jasmin1'] = 'exitosa'
+        except Exception as e:
+            print(e)
+            self.resultado['jasmin1'] = 'fallo'
+
+    def cargarJasmin1(self):
+        dia = self.dia
+        mes = self.mes
+        año = self.año
+        db = self.db
+        if int(dia) >15:
+            quincena=2
+        if int(dia) <16:
+            quincena=1  
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_experimental_option("prefs", {
+            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing_for_trusted_sources_enabled": False,
+            "safebrowsing.enabled": False
+        })
+        browser = webdriver.Chrome(options=options)
+        pagina = 'https://modelcenter.livejasmin.com/es/login'
+        estadistica= 'https://modelcenter.livejasmin.com/es/payout/income-statistics?fromDate='+año+'-'+mes+'-'+dia+'&toDate='+año+'-'+mes+'-'+dia+'&status=all&category=all'
+        browser.get(pagina)
+        user = browser.find_element('id', 'emailOrNick')
+        if user is not None:
+            user.send_keys("olimpowebstudio@gmail.com")
+        password = browser.find_element('id', 'password')
+        if password is not None:
+            password.send_keys("Zeus2020**")
+        time.sleep(2)
+        sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
+        if sumbit is not None:
+            sumbit.click()
+        time.sleep(4)
+        browser.get(estadistica)
+        sopa = browser.page_source
+
+        self.scraping(sopa)
+        for i in self.datos_tabla:
+            if 'Modelo' in i[0]:
+                continue
+            if 'Income Summary' in i[0]:
+                break
+            modelo = i[0].replace('\n','').replace('\t','')
+            cantidad = i[1].replace('$','')
+            print(modelo, cantidad)
+            db.child('jasmin').child((modelo)).child(año+mes+str(quincena)).child(dia).set(str(cantidad))
+            GuardarEstadistica('olimpo-jasmin', modelo, dia, mes, año, cantidad).save()
+    
+    def imlive(self):
+        try:
+            self.cargarImlive1()
+            self.resultado['imlive1'] = 'exitosa'
+        except Exception as e:
+            print(e)
+            self.resultado['imlive1'] = 'fallo'
+    
+    def cargarImlive1(self):
+        dia = self.dia
+        mes = self.mes
+        año = self.año
+        db = self.db
+        if int(dia) >15:
+            quincena=2
+        if int(dia) <16:
+            quincena=1  
+        options = Options()
+        # options.add_argument("--headless=new")
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_experimental_option("prefs", {
+            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing_for_trusted_sources_enabled": False,
+            "safebrowsing.enabled": False
+        })
+        browser = webdriver.Chrome(options=options)
+        pagina = 'https://studio.imlive.com/#/'
+        estadistica= 'https://studio.imlive.com/#/Studio/Statistics'
+        browser.get(pagina)
+        log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
+        if log is not None:
+            log.click()
+        user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
+        if user is not None:
+            user.send_keys("olimpostudioll")
+        password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
+        if password is not None:
+            password.send_keys("Zeus2020**")
+        time.sleep(2)
+        sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
+        if sumbit is not None:
+            sumbit.click()
+        time.sleep(4)
+        browser.get(estadistica)
+        time.sleep(4)
+        sumbit = browser.find_element('xpath', '/html/body/div/div/div[1]/div[2]/div/section/div[2]/div[2]/div/div/div[2]')
+        if sumbit is not None:
+            sumbit.click()
+        time.sleep(4)
+        sopa = browser.page_source
+
+        self.scraping(sopa)
+        data = self.datos_tabla
+        for i in data:
+            modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
+            cantidad = i[9].replace('$','')
+            if float(cantidad) > 0:
+                diaQuincena = 15 if quincena == 1 else 30
+                db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
+        
+        browser.quit()

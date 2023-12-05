@@ -24,6 +24,14 @@ urlpatterns = [
     path('cargarPaginas/<str:dia>/<str:mes>/<str:año>', views.cargarPaginas, name='cargarPaginas'),
     path('cargarGanancia/', views.cargarDataUnidad, name='cargarData'),
     path('selenium/', views.selenium, name='selenium'),
+    path('asignarPagina/', views.asignarPagina, name='AsignarPagina'),
+    path('chaturbate/', views.chaturbate, name='Chaturbate'),
+    path('stripchat/', views.stripchat, name='Stripchat'),
+    path('bonga/', views.bonga, name='Bonga'),
+    path('flirt4free/', views.flirt4free, name='Flirt4free'),
+    path('streamate/', views.streamate, name='Streamate'),
+    path('jasmin/', views.jasmin, name='Jasmin'),
+    path('imlive/', views.imlive, name='Imlive'),
     # Incluye las rutas del router
     path('', include(router.urls)),
 ]

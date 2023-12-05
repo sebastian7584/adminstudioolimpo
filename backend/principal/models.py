@@ -16,11 +16,11 @@ class Bank(models.Model):
 
 class User(models.Model):
     code = models.IntegerField(unique=True)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+    email = models.EmailField(unique=True, null=True)
+    password = models.CharField(max_length=128, null=True)
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
-    birth = models.DateField()
+    birth = models.DateField(null=True)
     account_bank = models.CharField(max_length=128, null=True)
     id_bank = models.ForeignKey(Bank, null=True, on_delete=models.SET_NULL)
     admin = models.BooleanField(default=False)
