@@ -748,13 +748,13 @@ class CargarPaginas:
         options.add_argument("--headless=new")
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing_for_trusted_sources_enabled": False,
-            "safebrowsing.enabled": False
-        })
+        # options.add_experimental_option("prefs", {
+        #     "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
+        #     "download.prompt_for_download": False,
+        #     "download.directory_upgrade": True,
+        #     "safebrowsing_for_trusted_sources_enabled": False,
+        #     "safebrowsing.enabled": False
+        # })
         browser = webdriver.Chrome(options=options)
         pagina = 'https://modelcenter.livejasmin.com/es/login'
         estadistica= 'https://modelcenter.livejasmin.com/es/payout/income-statistics?fromDate='+año+'-'+mes+'-'+dia+'&toDate='+año+'-'+mes+'-'+dia+'&status=all&category=all'
@@ -765,10 +765,15 @@ class CargarPaginas:
         password = browser.find_element('id', 'password')
         if password is not None:
             password.send_keys("Zeus2020**")
-        time.sleep(2)
-        sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
-        if sumbit is not None:
-            sumbit.click()
+        time.sleep(5)
+        try:
+            sumbit = browser.find_element(By.CSS_SELECTOR, "div > button[type='submit']")
+            if sumbit is not None:
+                sumbit.click()
+        except:
+            sumbit = browser.find_element('xpath', "/html/body/div[5]/div[2]/ph-row/ph-col/div/div/form/div/div[3]/button")
+            if sumbit is not None:
+                sumbit.click()
         time.sleep(4)
         browser.get(estadistica)
         sopa = browser.page_source
