@@ -840,7 +840,7 @@ class CargarPaginas:
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
-            raise('no cargo datos la tabla')
+            raise Exception('no cargo datos la tabla')
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
