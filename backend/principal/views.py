@@ -138,7 +138,7 @@ def jasmin(request):
     resultado = cargar.resultado
     return Response(resultado)
 
-@api_view(['POST'])
+# @api_view(['POST'])
 def imlive(request):
     dia = request.data['dia']
     mes = request.data['mes']
