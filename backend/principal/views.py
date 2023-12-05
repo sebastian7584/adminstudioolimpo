@@ -241,6 +241,8 @@ class CargarPaginas:
                 for celda in celdas:
                     datos_fila.append(celda.get_text())
                 datos_tabla.append(datos_fila)
+        else:
+            raise Exception(f'{self.soup}')
         self.datos_tabla = datos_tabla
 
     
@@ -837,7 +839,7 @@ class CargarPaginas:
         time.sleep(10)
         sopa = browser.page_source
 
-        print(sopa)
+    
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
