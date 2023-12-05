@@ -1,6 +1,6 @@
 from selenium import webdriver
 from msedge.selenium_tools import Edge, EdgeOptions
-
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -28,6 +28,8 @@ import os
 import numpy as np
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
+import base64
+import io
 
 # Create your views here.
 
@@ -843,7 +845,10 @@ class CargarPaginas:
         self.scraping(sopa)
         data = self.datos_tabla
         if data == []:
-            raise Exception(f'{sopa}')
+            screenshot_bytes = browser.get_screenshot_as_png()
+            screenshot_buffer = io.BytesIO(screenshot_bytes)
+            base64_image = base64.b64encode(screenshot_bytes).decode("utf-8")
+            return JsonResponse({"base64Image": base64_image})
         for i in data:
             modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
             cantidad = i[9].replace('$','')
