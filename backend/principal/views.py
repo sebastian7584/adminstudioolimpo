@@ -829,7 +829,7 @@ class CargarPaginas:
             if data['Data'] is not None:
                 validacion = False
                 for i in data['Data']:
-                    if str(i['TotalEarnings']) == 0:
+                    if str(i['TotalEarnings']) != '0':
                         db.child('imlive').child(i['Username']).child(año+mes+str(quincena)).child(dia).set(str(i['TotalEarnings']))
                         GuardarEstadistica('olimpoll-imlive', i['Username'], dia, mes, año, i['TotalEarnings']).save()
             else:
