@@ -819,7 +819,7 @@ class CargarPaginas:
 
         cookies = {'ASP.NET_SessionId': 'l5lghwqg2s11lnohewre2gag'}
         validacion = True
-
+        contador = 0
         while validacion:
             response = requests.get(
                 f'https://studio.imlive.com/Services/ReportsService.ashx?action=hostreport&date={mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}^%^20-^%^20{mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}',
@@ -832,4 +832,8 @@ class CargarPaginas:
                     db.child('imlive').child(i['Username']).child(año+mes+str(quincena)).child(dia).set(str(i['TotalEarnings']))
                     GuardarEstadistica('olimpoll-imlive', i['Username'], dia, mes, año, i['TotalEarnings']).save()
             else:
+                contador += 1
+                if contador > 20:
+                    validacion = False
+                    raise Exception('excede intentos')
                 print(data['Data'])
