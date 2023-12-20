@@ -528,20 +528,21 @@ class CargarPaginas:
         
     def cargarBonga1(self):
         modelos=[
-            'rachellsex',
-            'ethan-jobs10',
+            # 'rachellsex',
+            # 'ethan-jobs10',
             'Besparis-xx99',
             'noah-hot',
             'taty-natasha',
             'rosa-sexhot',
-            'fetish-BDSM-3',
-            'submissionfet',
+            # 'fetish-BDSM-3',
+            # 'submissionfet',
             'proyectxxx',
             'guyslatins23',
             'latinsexnolim',
             'Thick-Kore2',
             'anahisgirl128',
             'madisonbrunette',
+            'electrasex',
         ]
         dia = self.dia
         mes = self.mes
@@ -562,7 +563,7 @@ class CargarPaginas:
                 ('date_from', fecha),
                 ('date_to', fecha),
             )
-
+            print(modelo)
             response = requests.get('https://bongacams.com/api/v1/stats/model-regular-earnings', headers=headers, params=params)
             data = response.json()
             if data is not None:
@@ -738,7 +739,7 @@ class CargarPaginas:
             self.cargarJasmin1()
             self.resultado['jasmin1'] = 'exitosa'
         except Exception as e:
-            self.resultado['jasmin1'] = f'{e}'
+            self.resultado['jasmin1'] = f'fallo'
 
     def cargarJasmin1(self):
         dia = self.dia
@@ -803,7 +804,7 @@ class CargarPaginas:
             self.resultado['imlive1'] = 'exitosa'
         except Exception as e:
             print(e)
-            self.resultado['imlive1'] = f'{e}'
+            self.resultado['imlive1'] = f'fallo'
     
     def cargarImlive1(self):
         dia = self.dia
@@ -813,44 +814,22 @@ class CargarPaginas:
         if int(dia) >15:
             quincena=2
         if int(dia) <16:
-            quincena=1  
-        options = Options()
-        options.add_argument("--headless=new")
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        browser = webdriver.Chrome(options=options)
-        pagina = 'https://studio.imlive.com/#/'
-        estadistica= 'https://studio.imlive.com/#/Studio/Statistics/HostReport'
-        browser.get(pagina)
-        log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
-        if log is not None:
-            log.click()
-        user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
-        if user is not None:
-            user.send_keys("olimpostudioll")
-        password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
-        if password is not None:
-            password.send_keys("Zeus2020**")
-        time.sleep(2)
-        wait = WebDriverWait(browser, 10)
-        sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
-        if sumbit is not None:
-            sumbit.click()
-        # time.sleep(4)
-        browser.get(estadistica)
-        time.sleep(10)
-        sopa = browser.page_source
+            quincena=1
+        mesfecha=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-    
-        self.scraping(sopa)
-        data = self.datos_tabla
-        if data == []:
-            raise Exception(f'{sopa}')
-        for i in data:
-            modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
-            cantidad = i[9].replace('$','')
-            if float(cantidad) > 0:
-                diaQuincena = 15 if quincena == 1 else 30
-                db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
-        
-        browser.quit()
+        cookies = {'ASP.NET_SessionId': 'l5lghwqg2s11lnohewre2gag'}
+        validacion = True
+
+        while validacion:
+            response = requests.get(
+                f'https://studio.imlive.com/Services/ReportsService.ashx?action=hostreport&date={mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}^%^20-^%^20{mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}',
+                cookies=cookies
+            )
+            data = response.json()
+            if data['Data'] is not None:
+                validacion = False
+                for i in data['Data']:
+                    db.child('imlive').child(i['Username']).child(año+mes+str(quincena)).child(dia).set(str(i['TotalEarnings']))
+                    GuardarEstadistica('olimpoll-imlive', i['Username'], dia, mes, año, i['TotalEarnings']).save()
+            else:
+                print(data['Data'])
