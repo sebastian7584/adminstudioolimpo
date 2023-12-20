@@ -822,7 +822,7 @@ class CargarPaginas:
         contador = 0
         while validacion:
             response = requests.get(
-                f'https://studio.imlive.com/Services/ReportsService.ashx?action=hostreport&date={mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}^%^20-^%^20{mesfecha[int(mes)-1]}^%^20{dia},^%^20{año}',
+                f'https://studio.imlive.com/Services/ReportsService.ashx?action=hostreport&date={mesfecha[int(mes)-1]} {dia}, {año} - {mesfecha[int(mes)-1]} {dia}, {año}',
                 cookies=cookies
             )
             data = response.json()
