@@ -30,7 +30,7 @@ from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import base64
 import io
-import shutil
+import subprocess
 
 # Create your views here.
 
@@ -655,7 +655,7 @@ class CargarPaginas:
             self.resultado['streamate1'] = 'fallo'
 
     def cargarStreamate1(self):
-        shutil.rmtree("/var/adminstudioolimpo/backend/archivos")
+        subprocess.run(['rm', '-r', "/var/adminstudioolimpo/backend/archivos"])
         dia = self.dia
         mes = self.mes
         año = self.año
