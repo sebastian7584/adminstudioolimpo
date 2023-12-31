@@ -30,6 +30,7 @@ from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import base64
 import io
+import shutil
 
 # Create your views here.
 
@@ -594,7 +595,7 @@ class CargarPaginas:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
+            "download.default_directory": "/var/adminstudioolimpo/backend/archivos/f4f",
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing_for_trusted_sources_enabled": False,
@@ -626,7 +627,7 @@ class CargarPaginas:
         if int(dia) <16:
             quincena=1   
 
-        ejemplo_dir= "/var/adminstudioolimpo/backend/archivos"
+        ejemplo_dir= "/var/adminstudioolimpo/backend/archivos/f4f"
         direct=[]
         directorio = pathlib.Path(ejemplo_dir)
         for fichero in directorio.iterdir():
@@ -663,7 +664,7 @@ class CargarPaginas:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_experimental_option("prefs", {
-            "download.default_directory": "/var/adminstudioolimpo/backend/archivos",
+            "download.default_directory": f"/var/adminstudioolimpo/backend/archivos/{año}{mes}{dia}",
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing_for_trusted_sources_enabled": False,
@@ -711,10 +712,10 @@ class CargarPaginas:
         monto=[]
         junta=[]
 
-        alica=ejemplo_dir + '/'+ direct[0]
+        alica=ejemplo_dir + f'/{año}{mes}{dia}'+ '/'+ direct[0]
         print(alica)
 
-        filename = ejemplo_dir + "/"+direct[0]
+        filename = ejemplo_dir + f'/{año}{mes}{dia}'+ "/"+direct[0]
 
         data = pandas.read_csv(filename, encoding='latin-1')
         data1 = np.asarray(data)
@@ -733,13 +734,14 @@ class CargarPaginas:
             GuardarEstadistica('olimpo-stream', nombre[i], dia, mes, año, monto[i]).save()
 
         remove(alica)
+        shutil.rmtree(ejemplo_dir)
 
     def jasmin(self):
         try:
             self.cargarJasmin1()
             self.resultado['jasmin1'] = 'exitosa'
         except Exception as e:
-            self.resultado['jasmin1'] = f'fallo'
+            self.resultado['jasmin1'] = f'{e}'
 
     def cargarJasmin1(self):
         dia = self.dia
@@ -804,7 +806,7 @@ class CargarPaginas:
             self.resultado['imlive1'] = 'exitosa'
         except Exception as e:
             print(e)
-            self.resultado['imlive1'] = f'fallo'
+            self.resultado['imlive1'] = f'{e}'
     
     def cargarImlive1(self):
         dia = self.dia
@@ -814,27 +816,44 @@ class CargarPaginas:
         if int(dia) >15:
             quincena=2
         if int(dia) <16:
-            quincena=1
-        mesfecha=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            quincena=1  
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        browser = webdriver.Chrome(options=options)
+        pagina = 'https://studio.imlive.com/#/'
+        estadistica= 'https://studio.imlive.com/#/Studio/Statistics/HostReport'
+        browser.get(pagina)
+        log = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/a/span')
+        if log is not None:
+            log.click()
+        user = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[2]/input')
+        if user is not None:
+            user.send_keys("olimpostudioll")
+        password = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[3]/input')
+        if password is not None:
+            password.send_keys("Zeus2020**")
+        time.sleep(2)
+        wait = WebDriverWait(browser, 10)
+        sumbit = browser.find_element('xpath', '/html/body/nav/div/div[3]/div[2]/div/form/div[4]')
+        if sumbit is not None:
+            sumbit.click()
+        # time.sleep(4)
+        browser.get(estadistica)
+        time.sleep(10)
+        sopa = browser.page_source
 
-        cookies = {'ASP.NET_SessionId': '0x4epzq01gu4yk4bfopqnp2k'}
-        validacion = True
-        contador = 0
-        while validacion:
-            response = requests.get(
-                f'https://studio.imlive.com/Services/ReportsService.ashx?action=hostreport&date={mesfecha[int(mes)-1]} {dia}, {año} - {mesfecha[int(mes)-1]} {dia}, {año}',
-                cookies=cookies
-            )
-            data = response.json()
-            if data['Data'] is not None:
-                validacion = False
-                for i in data['Data']:
-                    if str(i['TotalEarnings']) != '0':
-                        db.child('imlive').child(i['Username']).child(año+mes+str(quincena)).child(dia).set(str(i['TotalEarnings']))
-                        GuardarEstadistica('olimpoll-imlive', i['Username'], dia, mes, año, i['TotalEarnings']).save()
-            else:
-                contador += 1
-                if contador > 20:
-                    validacion = False
-                    raise Exception('excede intentos')
-                print(data['Data'])
+    
+        self.scraping(sopa)
+        data = self.datos_tabla
+        if data == []:
+            raise Exception(f'{sopa}')
+        for i in data:
+            modelo = i[1].replace('Last seen: Total Earning: $   Status: Approved. Block','')
+            cantidad = i[9].replace('$','')
+            if float(cantidad) > 0:
+                diaQuincena = 15 if quincena == 1 else 30
+                db.child('imlive').child((modelo)).child(año+mes+str(quincena)).child(diaQuincena).set(str(cantidad))
+        
+        browser.quit()
