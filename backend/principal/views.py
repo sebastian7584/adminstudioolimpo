@@ -585,6 +585,7 @@ class CargarPaginas:
             self.resultado['flirt1'] = 'fallo'
     
     def cargarFlirt4free1(self):
+        shutil.rmtree("/var/adminstudioolimpo/backend/archivos")
         dia = self.dia
         mes = self.mes
         año = self.año
@@ -654,6 +655,7 @@ class CargarPaginas:
             self.resultado['streamate1'] = 'fallo'
 
     def cargarStreamate1(self):
+        shutil.rmtree("/var/adminstudioolimpo/backend/archivos")
         dia = self.dia
         mes = self.mes
         año = self.año
@@ -734,7 +736,7 @@ class CargarPaginas:
             GuardarEstadistica('olimpo-stream', nombre[i], dia, mes, año, monto[i]).save()
 
         remove(alica)
-        shutil.rmtree(ejemplo_dir)
+        
 
     def jasmin(self):
         try:
