@@ -704,7 +704,7 @@ class CargarPaginas:
         if int(dia) <16:
             quincena=1  
         time.sleep(2)
-        ejemplo_dir= "/var/adminstudioolimpo/backend/archivos"
+        ejemplo_dir= f"/var/adminstudioolimpo/backend/archivos/{año}{mes}{dia}"
         direct=[]
         directorio = pathlib.Path(ejemplo_dir)
         for fichero in directorio.iterdir():
@@ -714,10 +714,10 @@ class CargarPaginas:
         monto=[]
         junta=[]
 
-        alica=ejemplo_dir + f'/{año}{mes}{dia}'+ '/'+ direct[0]
+        alica=ejemplo_dir +  '/'+ direct[0]
         print(alica)
 
-        filename = ejemplo_dir + f'/{año}{mes}{dia}'+ "/"+direct[0]
+        filename = ejemplo_dir + "/"+direct[0]
 
         data = pandas.read_csv(filename, encoding='latin-1')
         data1 = np.asarray(data)
