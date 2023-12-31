@@ -817,7 +817,7 @@ class CargarPaginas:
             quincena=1
         mesfecha=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-        cookies = {'ASP.NET_SessionId': 'l5lghwqg2s11lnohewre2gag'}
+        cookies = {'ASP.NET_SessionId': '0x4epzq01gu4yk4bfopqnp2k'}
         validacion = True
         contador = 0
         while validacion:
