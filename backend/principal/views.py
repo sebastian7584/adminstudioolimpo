@@ -585,7 +585,7 @@ class CargarPaginas:
             self.resultado['flirt1'] = 'fallo'
     
     def cargarFlirt4free1(self):
-        shutil.rmtree("/var/adminstudioolimpo/backend/archivos")
+        subprocess.run(['rm', '-r', "/var/adminstudioolimpo/backend/archivos"])
         dia = self.dia
         mes = self.mes
         año = self.año
