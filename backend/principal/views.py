@@ -423,7 +423,7 @@ class CargarPaginas:
             'guestWatchHistoryStartDate': '2022-04-16T17%3A39%3A37.780Z',
             '__cflb': '02DiuFntVtrkFMde1dj4khwPfLgZByWZi5m3READjJSur',
             '_gid': 'GA1.2.1388636281.1655395233',
-            'stripchat_com_sessionId': '327a8a54fd5c43e7ecad6a9aa2edf71112efdf976f97176cb0f4b59119b3',
+            'stripchat_com_sessionId': '258d0f848b5ccd285d8aef6c4a1c2e3eccc7a54ffb1a915b3cd9bd70c829',
             'stripchat_com_sessionRemember': '1',
             'userWatchHistoryIds': '30042591',
             '_gat': '1',
